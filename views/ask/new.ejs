@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+			<% include ../partials/header %>
+	</head>
+	<body>
+		<nav class="navbar navbar-default">
+		  <div class="container-fluid">
+		    <!-- Brand and toggle get grouped for better mobile display -->
+		    <div class="navbar-header">
+		      <a class="navbar-brand" href="#"><b><%= data.name %></b> Real Time Ask</a>
+		    </div>
+
+		    <!-- Collect the nav links, forms, and other content for toggling -->
+		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		      <ul class="nav navbar-nav">
+		      </ul>
+		      <ul class="nav navbar-nav navbar-right">
+		      </ul>
+		    </div><!-- /.navbar-collapse -->
+		  </div><!-- /.container-fluid -->
+		</nav>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2">
+					<div class="well">
+						<h3>Asking Question:</h3>
+						<form class="" action="/ask/<%= data.url %>/new" method="post">
+							<textarea id="message" class="form-control" rows="10" name="message"></textarea>
+							<br />
+							<div class="clearfix">
+								<button type="submit" name="button" class="btn btn-success pull-right">Submit</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

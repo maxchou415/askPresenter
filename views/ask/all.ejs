@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+			<% include ../partials/header %>
+			<link rel="stylesheet" href="https://cdn.jsdelivr.net/g/reveal.js@3.0.0(css/reveal.min.css+css/theme/reveal.min.css)">
+			<link rel="stylesheet" href="/stylesheets/theme/black.css" id="theme">
+			<script src="https://cdn.jsdelivr.net/reveal.js/3.0.0/js/reveal.min.js"></script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<% data.question.forEach((i) => { %>
+					<section>
+						<h1><%= i %></h1>
+					</section>
+				<% }) %>
+				</div>
+		</div>
+		<script>
+			// Required, even if empty.
+			Reveal.initialize({
+				transition: 'slide',
+				controls: true,
+				progress: false,
+				history: true,
+				center: true
+			});
+		</script>
+		<script type="text/javascript">
+		  setTimeout(function(){
+		    location.reload()
+		  }, 5000)
+		</script>
+	</body>
+</html>

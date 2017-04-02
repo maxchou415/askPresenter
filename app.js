@@ -10,7 +10,6 @@ const bodyparser = require('koa-bodyparser')()
 const logger = require('koa-logger')
 const mongoose = require('mongoose')
 
-const index = require('./routes/index')
 const ask = require('./routes/ask')
 const users = require('./routes/users')
 const apis = require('./routes/apis')
@@ -35,7 +34,6 @@ app.use(async (ctx, next) => {
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
 
-router.use('/', index.routes(), index.allowedMethods())
 router.use('/ask', ask.routes(), ask.allowedMethods())
 router.use('/users', users.routes(), users.allowedMethods())
 router.use('/api', apis.routes(), apis.allowedMethods())

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<% include ../../partials/header %>
+	</head>
+	<body>
+		<% include ../../partials/navberIsLoggedIn %>
+		<div class="container">
+			<div class="col-md-6 col-md-offset-3">
+				<h1>New Channel</h1>
+				<form class="" action="/users/channel/new" method="post">
+					<input type="text" name="name" value="" class="form-control" placeholder="Channel Name">
+					<br />
+					<input type="text" name="url" value="" class="form-control" placeholder="Channel URL">
+					<br />
+					<button type="submit" name="button" class="btn btn-success pull-right">Submit</button>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>

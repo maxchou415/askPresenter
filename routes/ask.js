@@ -3,33 +3,24 @@ const config = require('config')
 
 const Ask = require('../models/askSchema')
 
-// Create a asking channel
-router.post('/new', async (ctx, next) => {
-    let url = ctx.request.body.url
-    let name = ctx.request.body.name
-    let data = {
-      url: url,
-      name: name
-    }
-    try {
-      let newly = await Ask.create(data)
-      console.log(newly)
-    } catch (e) {
-      console.log(e)
-    }
-})
-
 // Fetch Questions data by url
 router.get('/:url/all', async (ctx, next) => {
     let url = ctx.params.url
     try {
       let find = await Ask.findOne({'url' : url })
-      let name = await find.name
-      ctx.state = {
-        title: `${name} Real Time Ask`,
-        data: find
+      if(find.status === false || find.isRemoved === true) {
+        ctx.body = {
+          'message' : 'This channel is closed or removed'
+        }
+        return
+      } else {
+        let name = await find.name
+        ctx.state = {
+          title: `${name} Real Time Ask`,
+          data: find
+        }
+        await ctx.render('ask/all')
       }
-      await ctx.render('ask/all')
     } catch (e) {
       console.log(e)
       ctx.body = {

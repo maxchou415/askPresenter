@@ -17,8 +17,9 @@ const askSchema = new Schema({
     question: [{
       type: String
     }],
-    status: { type: Boolean, default: 1 },
-
+    status: { type: Boolean, default: true },
+    isRemoved: { type: Boolean, default: false },
+    
     _id: { type: String, default: shortId.generate },
     created_at: { type: Date, default: Time }
 })

@@ -1,4 +1,6 @@
 # askPresenter
+# Introduction
+Real time ask question to presenter from listener in presentation time.
 # How to use
 1. Create a channel<br />
 ```[POST] /api/ask/new/```

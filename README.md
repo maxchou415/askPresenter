@@ -11,5 +11,5 @@
 Also can use browser to send question at
 ```/ask/<channel_url>/new```
 
-3. View all question of a chennel (Browser)
+3. View all question of a chennel (Browser)<br />
 ```/ask/<channel_url>/all```

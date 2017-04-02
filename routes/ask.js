@@ -33,12 +33,19 @@ router.get('/:url/new', async (ctx, next) => {
     let url = ctx.params.url
     try {
       let find = await Ask.findOne({'url' : url })
-      let name = await find.name
-      ctx.state = {
-        title: `${name} Real Time Ask`,
-        data: find
+      if(find.status === false || find.isRemoved === true) {
+        ctx.body = {
+          'message' : 'This channel is closed or removed'
+        }
+        return
+      } else {
+        let name = await find.name
+        ctx.state = {
+          title: `${name} Real Time Ask`,
+          data: find
+        }
+        await ctx.render('ask/new')
       }
-      await ctx.render('ask/new')
     } catch (e) {
       console.log(e)
     }

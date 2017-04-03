@@ -33,7 +33,7 @@ app.use(session(sessionConfig, app))
 // middlewares
 app.use(convert(bodyparser))
 app.use(convert(json()))
-app.use(convert(logger()))
+// app.use(convert(logger()))
 app.use(require('koa-static')(__dirname + '/public'))
 
 app.use(views(__dirname + '/views', {
@@ -41,12 +41,12 @@ app.use(views(__dirname + '/views', {
 }))
 
 // logger
-app.use(async (ctx, next) => {
-  const start = new Date()
-  await next()
-  const ms = new Date() - start
-  console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
-})
+// app.use(async (ctx, next) => {
+//   const start = new Date()
+//   await next()
+//   const ms = new Date() - start
+//   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
+// })
 
 router.use('/ask', ask.routes(), ask.allowedMethods())
 router.use('/users', users.routes(), users.allowedMethods())

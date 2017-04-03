@@ -9,9 +9,11 @@ router.get('/:url/all', async (ctx, next) => {
     try {
       let find = await Ask.findOne({'url' : url })
       if(find.status === false || find.isRemoved === true) {
-        ctx.body = {
-          'message' : 'This channel is closed or removed'
+        ctx.state = {
+          title: `Error to open channel`,
+          message: `This channel has been closed or removed.`
         }
+        await ctx.render('message/index')
         return
       } else {
         let name = await find.name
@@ -22,10 +24,11 @@ router.get('/:url/all', async (ctx, next) => {
         await ctx.render('ask/all')
       }
     } catch (e) {
-      console.log(e)
-      ctx.body = {
-        'message' : 'Not Found'
+      ctx.state = {
+        title: `Failed to open channel`,
+        message: `Your URL '${url}' is incorrent, Plaese make sure it and try again.`
       }
+      await ctx.render('message/index')
     }
 })
 
@@ -34,9 +37,11 @@ router.get('/:url/new', async (ctx, next) => {
     try {
       let find = await Ask.findOne({'url' : url })
       if(find.status === false || find.isRemoved === true) {
-        ctx.body = {
-          'message' : 'This channel is closed or removed'
+        ctx.state = {
+          title: `Error to open channel`,
+          message: `This channel has been closed or removed.`
         }
+        await ctx.render('message/index')
         return
       } else {
         let name = await find.name
@@ -47,7 +52,11 @@ router.get('/:url/new', async (ctx, next) => {
         await ctx.render('ask/new')
       }
     } catch (e) {
-      console.log(e)
+      ctx.state = {
+        title: `Failed to open channel`,
+        message: `Your URL '${url}' is incorrent, Plaese make sure it and try again.`
+      }
+      await ctx.render('message/index')
     }
 })
 
@@ -55,20 +64,26 @@ router.post('/:url/new/', async (ctx, next) => {
     let url = ctx.params.url
     let message = ctx.request.body.message
     if(!message){
-      ctx.body = {
-        'message' : 'Question is required'
+      ctx.state = {
+        title: `Error to create question`,
+        message: `Question is required`
       }
+      await ctx.render('message/index')
       return
     } else {
       try {
         let newlyQuestion = await Ask.update({'url' : url}, { $push: {'question': message}}, {upsert: true})
-        ctx.body = {
-          'message' : '成功提問'
+        ctx.state = {
+          title: `Success`,
+          message: `Your question has been sent.`
         }
+        await ctx.render('message/index')
       } catch (e) {
-        ctx.body = {
-          'message' : 'Failed'
+        ctx.state = {
+          title: `Failed`,
+          message: `Create question failed.`
         }
+        await ctx.render('message/index')
       }
     }
 

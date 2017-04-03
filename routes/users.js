@@ -24,13 +24,15 @@ router.post('/signup', async (ctx, next) => {
   }
   try {
     let create = await User.create(newlyUser)
-    ctx.body = {
-      'message' : 'User created'
-    }
+    let sessionCreator = await services.sessionGenerator(create)
+    ctx.session.user = sessionCreator
+    await ctx.redirect('/users/dashboard')
   } catch (e) {
-    ctx.body = {
-      'message' : 'Create user failed'
+    ctx.state = {
+      title: `Signup Failed`,
+      message: `Signup Failed`
     }
+    await ctx.render('message/index')
   }
 })
 
@@ -41,14 +43,18 @@ router.post('/signin', async (ctx, next) => {
   try {
     let loginProcess = await User.findOne({'username': username})
     if(loginProcess === null) {
-      ctx.body = {
-        'message' : 'user not found'
+      ctx.state = {
+        title: `User Not Found`,
+        message: `User Not Found`
       }
+      await ctx.render('message/index')
       return
     } else if(loginProcess.password !== passwordHashed) {
-      ctx.body = {
-        'message' : 'password incorrent'
+      ctx.state = {
+        title: `Password incorrent`,
+        message: `Password incorrent`
       }
+      await ctx.render('message/index')
       return
     } else {
       let sessionCreator = await services.sessionGenerator(loginProcess)
@@ -56,8 +62,9 @@ router.post('/signin', async (ctx, next) => {
       await ctx.redirect('/users/dashboard')
     }
   } catch (e) {
-    ctx.body = {
-      'message': 'something error'
+    ctx.state = {
+      title: `something error`,
+      message: `something error`
     }
     return
   }

@@ -2,16 +2,24 @@
 # Introduction
 Real time ask question to presenter from listener in presentation time.
 # How to use
-1. Create a channel<br />
-```[POST] /api/ask/new/```
-+ Required:
-  - ```Name``` Your channel name
-  - ```URL``` Your channel url (like: CKHS)
+### Required
++ MongoDB
++ Node.js v7.6 or newly version
 
-2. Send Question<br />
-```[POST] /api/ask/<channel_url>/new/<question>```<br />
-Also can use browser to send question at
-```/ask/<channel_url>/new```
+### Step
+1. ```git clone https://github.com/maxyihsunchou/askPresenter.git```<br />
+2. ```$ cd askPresenter && npm start``` <br />
+3. ```[POST] localhost:3000/users/signup/```<br />
++ Required
+  - name
+  - username
+  - password
+4. ```[Browser] http://localhost:3000/users/signin/```
 
-3. View all question of a chennel (Browser)<br />
-```/ask/<channel_url>/all```
+### Other
++ You need create a channel first
+#### View channel questions
+```[Browser] http://localhost:3000/<channel_url>/all```
+<br />
+#### Create question
+```[Browser] http://localhost:3000/<channel_url>/new```

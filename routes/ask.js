@@ -52,18 +52,26 @@ router.get('/:url/new', async (ctx, next) => {
 })
 
 router.post('/:url/new/', async (ctx, next) => {
-    let message = ctx.request.body.message
     let url = ctx.params.url
-    try {
-      let newlyQuestion = await Ask.update({'url' : url}, { $push: {'question': message}}, {upsert: true})
+    let message = ctx.request.body.message
+    if(!message){
       ctx.body = {
-        'message' : '成功提問'
+        'message' : 'Question is required'
       }
-    } catch (e) {
-      ctx.body = {
-        'message' : 'Failed'
+      return
+    } else {
+      try {
+        let newlyQuestion = await Ask.update({'url' : url}, { $push: {'question': message}}, {upsert: true})
+        ctx.body = {
+          'message' : '成功提問'
+        }
+      } catch (e) {
+        ctx.body = {
+          'message' : 'Failed'
+        }
       }
     }
+
 })
 
 module.exports = router
